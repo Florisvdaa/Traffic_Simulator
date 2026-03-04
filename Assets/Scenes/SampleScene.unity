@@ -565,6 +565,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3325715316404482564, guid: ac775c8f5c574aa4683a1ba379f709df, type: 3}
   m_PrefabInstance: {fileID: 1194691693}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1430343003 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2782731137459146337, guid: ac775c8f5c574aa4683a1ba379f709df, type: 3}
+  m_PrefabInstance: {fileID: 1784080479}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1538281987
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,6 +640,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.5, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1683562701 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1891491288157810130, guid: ac775c8f5c574aa4683a1ba379f709df, type: 3}
+  m_PrefabInstance: {fileID: 1784080479}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1723333795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -843,8 +853,10 @@ MonoBehaviour:
   vehiclePrefab: {fileID: 486674853279429201, guid: 8721c62405c90f34884a0bb69cc365a7, type: 3}
   spawnPoints:
   - {fileID: 1010576902}
+  - {fileID: 1683562701}
   startNodes:
   - {fileID: 1912095840}
+  - {fileID: 1430343003}
   spawnInterval: 3
 --- !u!1001 &1987071377
 PrefabInstance:
