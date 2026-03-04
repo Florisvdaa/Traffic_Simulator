@@ -6,6 +6,8 @@ public class Node : MonoBehaviour
 {
     public Transform[] nextNodes;
 
+    public bool isLeftNode;
+
     public Transform GetNextNode()
     {
         if (nextNodes.Length == 0) return null;
@@ -13,8 +15,16 @@ public class Node : MonoBehaviour
     }
     void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 0.3f);
+        if (isLeftNode)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawSphere(transform.position, 0.3f);
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(transform.position, 0.3f);
+        }
 
         if (nextNodes == null) return;
 
@@ -24,5 +34,6 @@ public class Node : MonoBehaviour
             if (n != null)
                 Gizmos.DrawLine(transform.position, n.position);
         }
+
     }
 }

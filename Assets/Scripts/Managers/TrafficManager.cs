@@ -13,12 +13,17 @@ public class TrafficManager : MonoBehaviour
 
     private void Update()
     {
-        timer += Time.deltaTime;
+        //timer += Time.deltaTime;
 
-        if (timer >= spawnInterval)
+        //if (timer >= spawnInterval)
+        //{
+        //    SpawnVehicle();
+        //    timer = 0f;
+        //}
+
+        if (Input.GetKeyUp(KeyCode.Space))
         {
             SpawnVehicle();
-            timer = 0f;
         }
     }
 

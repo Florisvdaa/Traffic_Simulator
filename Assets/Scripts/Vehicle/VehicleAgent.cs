@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class VehicleAgent : MonoBehaviour
 {
-    [SerializeField] private float speed = 8f;
+    [Header("Movement")]
+    [SerializeField] private float maxSpeed = 8f;
+    [SerializeField] private float acceleration = 6f;
+    [SerializeField] private float brakeForce = 10f;
     [SerializeField] private float turnSpeed = 5f;
     [SerializeField] private float stopDistance = 3f;
+
+    [SerializeField] private LayerMask obstacleMask;
     [SerializeField] private Transform currentNode;
 
+    private TrafficLightController currentTrafficLight;
     private Rigidbody rb;
+
+    private float currentSpeed = 0f;
 
     private void Start()
     {
@@ -20,23 +28,52 @@ public class VehicleAgent : MonoBehaviour
     {
         if (currentNode == null) return;
 
-        Vector3 dir = (currentNode.position - transform.position).normalized;
+        bool shouldStop = false;
 
-        // check for obstacles
-        if (Physics.Raycast(transform.position + Vector3.up * 0.5f, transform.forward, out RaycastHit hit, stopDistance))
+        // Red light check
+        if (currentTrafficLight != null &&
+            currentTrafficLight.CurrentLightState() == LightState.Red)
         {
-            rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, 0.1f);
-            return;
+            shouldStop = true;
         }
 
-        // Move forward
-        rb.velocity = transform.forward * speed;
+        // Obstacle check
+        if (Physics.Raycast(transform.position + Vector3.up * 0.5f,
+                            transform.forward,
+                            out RaycastHit hit,
+                            stopDistance,
+                            obstacleMask))
+        {
+            shouldStop = true;
+        }
+
+        // Speed control
+        if (shouldStop)
+        {
+            currentSpeed = Mathf.MoveTowards(
+                currentSpeed,
+                0f,
+                brakeForce * Time.fixedDeltaTime);
+        }
+        else
+        {
+            currentSpeed = Mathf.MoveTowards(
+                currentSpeed,
+                maxSpeed,
+                acceleration * Time.fixedDeltaTime);
+        }
+
+        // Apply movement
+        rb.velocity = transform.forward * currentSpeed;
 
         // Rotate towards next node
+        Vector3 dir = (currentNode.position - transform.position).normalized;
         Quaternion targetRot = Quaternion.LookRotation(dir);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, Time.deltaTime * turnSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation,
+                                             targetRot,
+                                             Time.deltaTime * turnSpeed);
 
-        // If close to node -> pick next
+        // Switch node if close
         if (Vector3.Distance(transform.position, currentNode.position) < 1f)
         {
             Node n = currentNode.GetComponent<Node>();
@@ -45,9 +82,9 @@ public class VehicleAgent : MonoBehaviour
         }
     }
 
-    public void ChangeSpeed(float newSpeed)
+    public void SetTrafficLight(TrafficLightController light)
     {
-        speed = newSpeed;
+        currentTrafficLight = light;
     }
 
     public Transform GetCurrentNode() => currentNode;

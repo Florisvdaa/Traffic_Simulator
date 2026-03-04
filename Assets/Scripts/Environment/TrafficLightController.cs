@@ -6,21 +6,45 @@ public enum LightState { Green, Yellow, Red}
 public class TrafficLightController : MonoBehaviour
 {
     [SerializeField] private LightState lightState = LightState.Green;
+    
+    private HashSet<VehicleAgent> vehiclesInZone = new HashSet<VehicleAgent>();
+
     [SerializeField] private float greenTime = 5f;
     [SerializeField] private float yellowTime = 2f;
     [SerializeField] private float redTime = 5f;
 
     private float timer;
 
+    private void OnTriggerEnter(Collider other)
+    {
+        VehicleAgent agent = other.GetComponent<VehicleAgent>();
+        if (agent != null)
+        {
+            vehiclesInZone.Add(agent);
+            agent.SetTrafficLight(this);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        VehicleAgent agent = other.GetComponent<VehicleAgent>();
+        if (agent != null)
+        {
+            vehiclesInZone.Remove(agent);
+            agent.SetTrafficLight(null);
+        }
+    }
+
+
     private void Update()
     {
         timer += Time.deltaTime;
 
 
-        switch(lightState)
+        switch (lightState)
         {
             case LightState.Green:
-                    if (timer >= greenTime) SwitchState(LightState.Yellow);
+                if (timer >= greenTime) SwitchState(LightState.Yellow);
                 break;
             case LightState.Yellow:
                 if (timer >= yellowTime) SwitchState(LightState.Red);

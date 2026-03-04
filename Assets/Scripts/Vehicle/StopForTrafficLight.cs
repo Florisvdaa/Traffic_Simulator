@@ -20,13 +20,13 @@ public class StopForTrafficLight : MonoBehaviour
 
         float dist = Vector3.Distance(transform.position, trafficLight.transform.position);
 
-        if (dist < stopDistance && trafficLight.CurrentLightState() == LightState.Red)
-        {
-            agent.ChangeSpeed(0f);
-        }
-        else
-        {
-            agent.ChangeSpeed(8f); // Get the old speed and save it, or accelerate 
-        }
+        //if (dist < stopDistance && trafficLight.CurrentLightState() == LightState.Red)
+        //{
+        //    agent.ChangeSpeed(0f);
+        //}
+        //else
+        //{
+        //    agent.ChangeSpeed(8f); // Get the old speed and save it, or accelerate 
+        //}
     }
 }
