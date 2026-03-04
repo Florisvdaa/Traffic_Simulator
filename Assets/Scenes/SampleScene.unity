@@ -390,6 +390,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4825665217147304598, guid: c8307af8d019d4d479aa1de49ed96d3e, type: 3}
   m_PrefabInstance: {fileID: 466791522}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &577178628 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4825665217147304598, guid: c8307af8d019d4d479aa1de49ed96d3e, type: 3}
+  m_PrefabInstance: {fileID: 1464349353}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &643335617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1280,8 +1285,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vehiclePrefab: {fileID: 486674853279429201, guid: 8721c62405c90f34884a0bb69cc365a7, type: 3}
-  spawnPoints: []
-  startNodes: []
+  spawnPoints:
+  - {fileID: 577178628}
+  startNodes:
+  - {fileID: 577178628}
   spawnInterval: 3
 --- !u!1 &2052096877
 GameObject:
